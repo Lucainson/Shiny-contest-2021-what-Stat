@@ -5,12 +5,10 @@ suppressMessages(library(shiny))
 suppressMessages(library(shinydashboard))
 suppressMessages(library(shinydashboardPlus))
 suppressMessages(library(dplyr))
-suppressMessages(library(NLP))
 suppressMessages(library(ggplot2))
-suppressMessages(library(tm)) # text mining
+suppressMessages(library(tm)) 
 suppressMessages(library(stringr))
-suppressMessages(library(SnowballC)) # text stemming
-suppressMessages(library(RColorBrewer)) # Color Palettes
+suppressMessages(library(RColorBrewer)) 
 suppressMessages(library(wordcloud2))
 suppressMessages(library(viridis))
 suppressMessages(library(tidytext))
@@ -20,17 +18,13 @@ suppressMessages(library(slam))
 suppressMessages(library(tidyr))
 suppressMessages(library(igraph))
 suppressMessages(library(ggraph))
-suppressMessages(library(ggiraphExtra))
-suppressMessages(library(ggiraph))
 suppressMessages(library(widyr))
 suppressMessages(library(urltools))
 suppressMessages(library(scales))
 suppressMessages(library(plotly))
 suppressMessages(library(shinycssloaders))
 suppressMessages(library(ggplot2))
-suppressMessages(library(gganimate))
 suppressMessages(library(hrbrthemes))
-suppressMessages(library(gifski))
 suppressMessages(library(extrafont))
 suppressMessages(library(lubridate))
 suppressMessages(library(topicmodels))
@@ -195,7 +189,8 @@ ui <- dashboardPagePlus(
                                                   min=2009, max= 2021, value=2019, step = 1, sep=""),
                                       style = "font-family:Cambria;color:white;margin:auto",
                                       a(),
-                                      plotlyOutput("plot_seri_chrono",height = "430px"))),
+                                      shinycssloaders::withSpinner(
+                                      plotlyOutput("plot_seri_chrono",height = "430px")))),
                               
                               column(6,
                                   box(width=12, height=630, solidHeader = T, title = strong("Web link shared",
@@ -205,9 +200,10 @@ ui <- dashboardPagePlus(
                                       sliderInput("max_link",
                                                   "Fix the number of web domain name:",
                                                   min = 5,  max = 20, value = 10, step = 2),
+                                      style = "font-family:Cambria;color:white;margin:auto",
                                       a(),
-                                      
-                              plotOutput("plot_link_shared",height = "430px")))),
+                                      shinycssloaders::withSpinner(
+                              plotOutput("plot_link_shared",height = "430px"))))),
                               
                               a(),
                               
@@ -217,7 +213,8 @@ ui <- dashboardPagePlus(
                                       background ="black",
                                       hr(),
                                       radioButtons("tel_type",NULL, c("ios","android"), selected = "ios", inline = T),
-                                      plotlyOutput("plot_stat",height = "530px")
+                                      shinycssloaders::withSpinner(
+                                      plotlyOutput("plot_stat",height = "530px"))
                                       )
                                   )
                               ),
@@ -232,7 +229,8 @@ ui <- dashboardPagePlus(
                                                     sliderInput("num_users", "Number of users to display:", width="100%",
                                                                 min=2, max= 10, value=2, step = 1),
                                            style = "font-family:times new roman;color:white;margin:auto",
-                                           plotOutput("plot_top_users",height = "470px"))),
+                                           shinycssloaders::withSpinner(
+                                           plotOutput("plot_top_users",height = "470px")))),
                                      column(6,
                                             box(width=12, height=680, solidHeader = F, background="black",title = strong("Users' activity depending on the moment of day",
                                                                                                                          style = "font-family:Cambria;color:white;margin:auto"),
@@ -240,7 +238,8 @@ ui <- dashboardPagePlus(
                                                 sliderInput("num_ajust", "Number of users to display:", width="100%",
                                                             min=2, max= 10, value=2, step = 1),
                                                 style = "font-family:Cambria;color:white;margin:auto",
-                                                plotOutput("plot_moment_jour",height = "470px")))),
+                                                shinycssloaders::withSpinner(
+                                                plotOutput("plot_moment_jour",height = "470px"))))),
                                    fluidRow(
                                    column(12,
                                    radioButtons("freq_ch","Choose a level for both day and hour graphs:", c("Cumulative","Median","Average"), selected = "Cumulative", inline = T))),
@@ -252,18 +251,21 @@ ui <- dashboardPagePlus(
                                               box(width=12, height=590, solidHeader = F, background="black",title = strong("Users' activity by time of day",
                                                   style = "font-family:Cambria;color:white;margin:auto"),
                                                   hr(),
-                                                  plotOutput("plot_act_heure",height = "480px"))),
+                                                  shinycssloaders::withSpinner(
+                                                  plotOutput("plot_act_heure",height = "480px")))),
                                        column(6,
                                               box(width=12, height=590, solidHeader = F,background="black", title = strong("Users' activity depending on the day of the week",
                                                   style = "font-family:Cambria;color:white;margin:auto"),
                                                   hr(),
-                                                  plotOutput("plot_act_jour",height = "480px")))),
+                                                  shinycssloaders::withSpinner(
+                                                  plotOutput("plot_act_jour",height = "480px"))))),
                                    
                                      fluidRow(
                                        box(width="100%", height=600, solidHeader = F,background="black", title = strong("Users' activity according to the time and day of the week",
                                                                                                                         style = "font-family:Cambria;color:white;margin:auto"),
                                        hr(),
-                                           plotOutput("plot_heure_jour",height = "485px"))
+                                       shinycssloaders::withSpinner(
+                                           plotOutput("plot_heure_jour",height = "485px")))
                                      )),
 
                       
@@ -280,7 +282,8 @@ ui <- dashboardPagePlus(
                                                sliderInput("w_cloud_freq", "Minimal frequency of words in the Wordcloud:", width="100%",
                                                            min=5, max= 1000, value=20, step = 5),
                                                style = "font-family:Cambria;color:white;margin:auto",
-                                               wordcloud2Output("word_cloud_plot",height = "500px"))
+                                      shinycssloaders::withSpinner(
+                                               wordcloud2Output("word_cloud_plot",height = "500px")))
                                   ),
                                   
                                   column(6,
@@ -292,7 +295,8 @@ ui <- dashboardPagePlus(
                                                          "Number of Users to fix:", width="100%",
                                                          min = 2,  max = 10, value = 2, step = 1),
                                              style = "font-family:Cambria;color:white;margin:auto",
-                                             plotOutput("plot_div_lex",height = "510px")))
+                                             shinycssloaders::withSpinner(
+                                             plotOutput("plot_div_lex",height = "510px"))))
                                 
                                 ),
                       
@@ -307,7 +311,8 @@ ui <- dashboardPagePlus(
                                              radioButtons("hist_gram",NULL, c("Uni-gram","Bi-gram", "Tri-gram"), 
                                                           selected = "Uni-gram", inline = T),
                                              style = "font-family:times new roman;color:white;margin:auto",
-                                             plotOutput("word_freq_plot", height="610px"))),
+                                             shinycssloaders::withSpinner(
+                                             plotOutput("word_freq_plot", height="610px")))),
                                   
                                 column(6,
                                   box(width=12, height=750, solidHeader = F,background="black", title = strong("Most frequent Words of top Users",
@@ -315,7 +320,8 @@ ui <- dashboardPagePlus(
                                       hr(),
                                                radioButtons("word_div_lex",NULL, c("Unweighted Frequency","TF-IDF","Weighted log odds ratio"), selected = "Unweighted Frequency", inline = T),
                                       style = "font-family:times new roman;color:white;margin:auto",
-                                               plotOutput("plot_predilec",height = "610px")
+                                      shinycssloaders::withSpinner(
+                                               plotOutput("plot_predilec",height = "610px"))
                                   )
                       )
                       
@@ -342,7 +348,8 @@ ui <- dashboardPagePlus(
                                   box(width=12, height=820, solidHeader = F, background="black",title = strong("Network analysis"),
                                   align="center",style = "font-family:times new roman;color:white;margin:auto",
                                   hr(),
-                                  visNetworkOutput("plot_net",height="635px",width = "100%"))))),
+                                  shinycssloaders::withSpinner(
+                                  visNetworkOutput("plot_net",height="635px",width = "100%")))))),
                       
                       tabItem(tabName = "emojis",
                               fluidPage(
@@ -361,7 +368,8 @@ by the authors in this article: https://doi.org/10.1371/journal.pone.0144296",
                                           box(width=12, height=760, solidHeader = F, background="black",title = strong("Sentiment Polarity of Users",
                                                                                                                        style = "font-family:Cambria;color:white;margin:auto"),
                                               hr(),
-                                          plotlyOutput("plot_pol_sent",height="650px", width = "100%")))
+                                              shinycssloaders::withSpinner(
+                                          plotlyOutput("plot_pol_sent",height="650px", width = "100%"))))
                                       
                                       
                                   )
@@ -408,7 +416,8 @@ by the authors in this article: https://doi.org/10.1371/journal.pone.0144296",
                                                                                "Number of words to display in the network:",width="100%",
                                                                                min = 10,  max = 100, value = 20, step = 10),align="justify",
                                                                    style = "font-family:Cambria;color:white;margin:auto",
-                                                                   plotOutput("network_plot", height ="697px")),
+                                                                   shinycssloaders::withSpinner(
+                                                                   plotOutput("network_plot", height ="697px"))),
                                                           
                                                           tabPanel("Correlation in the network",width=12,
                                                                    style = "font-family:Cambria;color:white;margin:auto",
@@ -423,7 +432,8 @@ by the authors in this article: https://doi.org/10.1371/journal.pone.0144296",
                                                                                "Minimum network word frequency:",width="100%",
                                                                                min = 5,  max = 500, value = 20, step = 5)),
                                                                    style = "font-family:Cambria;color:white;margin:auto",
-                                                                   plotOutput("corr_plot",height = "700px"))
+                                                                   shinycssloaders::withSpinner(
+                                                                   plotOutput("corr_plot",height = "700px")))
                                               )
                                           )
                                        )
@@ -467,7 +477,8 @@ The model is trained multiple times to determine the maximum likelihood that eac
                                                       title = strong("Topic Proportions over Time", style = "font-family:Cambria;color:white;margin:auto"),
                                                       style = "font-family:Cambria;color:white;margin:auto",
                                                       hr(),
-                                                      plotlyOutput("plot_topic",height = "690px")))),
+                                                      shinycssloaders::withSpinner(
+                                                      plotlyOutput("plot_topic",height = "690px"))))),
                                          br(),
                                          
                                   textOutput("tpcs_number"),
@@ -507,11 +518,12 @@ The model is trained multiple times to determine the maximum likelihood that eac
                                   column(6,id="col_plot_comp",
                                          
                                          box(width=12, height=500, solidHeader = F,background="black",
-                                             
-                                             plotlyOutput("plot_comp",height = "470px"))),
+                                             shinycssloaders::withSpinner( 
+                                             plotlyOutput("plot_comp",height = "470px")))),
                                   column(6,id="col_plot_pred",
                                          box(width=12, height=500, solidHeader = F,background="black",
-                                             plotOutput("plot_pred",height = "470px")
+                                             shinycssloaders::withSpinner(
+                                             plotOutput("plot_pred",height = "470px"))
                                              
                                          ))),
                                 div(),
